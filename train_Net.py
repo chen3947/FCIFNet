@@ -6,13 +6,13 @@ import numpy as np
 import os, argparse
 from datetime import datetime
 from tqdm import tqdm
-from model.MAGNet import MHFNet
+from model.FCIFNet import FCIFNet
 from data import get_loader, test_dataset
 from utils import clip_gradient, adjust_lr, opt_save, iou_loss
 
 import pytorch_iou
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 parser = argparse.ArgumentParser()
 parser.add_argument('--epoch', type=int, default=200, help='epoch number')
 parser.add_argument('--lr', type=float, default=5e-5, help='learning rate')
@@ -21,18 +21,17 @@ parser.add_argument('--trainsize', type=int, default=384, help='training image s
 parser.add_argument('--continue_train', type=bool, default=False, help='continue training')
 parser.add_argument('--continue_train_path', type=str, default='', help='continue training path')
 
-parser.add_argument('--rgb_root', type=str, default='/home/ubuntu2204/CHY/FCIFNet-RGBD/train_data2/RGB/',
-                    help='the training rgb images root')  # train_dut
-parser.add_argument('--depth_root', type=str, default='/home/ubuntu2204/CHY/FCIFNet-RGBD/train_data2/depth/',
+parser.add_argument('--rgb_root', type=str, default='./train_data/RGB/',
+                    help='the training rgb images root')
+parser.add_argument('--depth_root', type=str, default='./train_data/depth/',
                     help='the training depth images root')
-parser.add_argument('--gt_root', type=str, default='/home/ubuntu2204/CHY/FCIFNet-RGBD/train_data2/GT/',
+parser.add_argument('--gt_root', type=str, default='./train_data/GT/',
                     help='the training gt images root')
-
-parser.add_argument('--val_rgb', type=str, default="/home/ubuntu2204/CHY/FCIFNet-RGBD/val/RGB/",
+parser.add_argument('--val_rgb', type=str, default='./val/RGB/',
                     help='validate rgb path')
-parser.add_argument('--val_depth', type=str, default="/home/ubuntu2204/CHY/FCIFNet-RGBD/val/depth/",
+parser.add_argument('--val_depth', type=str, default='./val/depth/',
                     help='validate depth path')
-parser.add_argument('--val_gt', type=str, default="/home/ubuntu2204/CHY/FCIFNet-RGBD/val/GT/",
+parser.add_argument('--val_gt', type=str, default='./val/GT/',
                     help='validate gt path')
 
 
@@ -51,7 +50,7 @@ logging.basicConfig(filename=opt.save_path + 'log.log',
                     datefmt='%Y-%m-%d %H:%M:%S %p')
 logging.info("Net-Train")
 # model
-model = MHFNet()
+model = FCIFNet()
 if os.path.exists("ckps/smt/smt_tiny.pth"):
     model.rgb_backbone.load_state_dict(torch.load("ckps/smt/smt_tiny.pth")['model'])
     print(f"loaded imagenet pretrained SMT from ckps/smt/smt_tiny.pth")
@@ -153,7 +152,7 @@ def validate(test_dataset, model, epoch, opt):
         if mae < best_mae:
             best_mae = round(mae, 5)
             best_epoch = epoch
-            torch.save(model.state_dict(), opt.save_path + 'MAGNet_mae_best.pth', _use_new_zipfile_serialization=False)
+            torch.save(model.state_dict(), opt.save_path + 'FCIFNet_mae_best.pth', _use_new_zipfile_serialization=False)
             print('best epoch:{}'.format(epoch))
     msg = 'Epoch: {} MAE: {:.5f} ####  bestMAE: {} bestEpoch: {}'.format(epoch, mae, best_mae, best_epoch)
     print(msg)
