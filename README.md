@@ -10,11 +10,11 @@ This project provides the code and results for 'FCIFNet:Feature correction and I
 
 ## Datasets
 ### Training Dataset
-All training datasets are available at:  
+Our training datasets are available at:  
 [百度网盘](https://pan.baidu.com/s/1r2-nBG1BH1X3o2LEQZnTHw) 提取码：6c8d
 
 ### Testing Dataset
-All testing datasets are available at:  
+Our testing datasets are available at:  
 [百度网盘](https://pan.baidu.com/s/1gWAY8o8QtevMiFpkaOW1cw) 提取码：2628
 
 ## Results
