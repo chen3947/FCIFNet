@@ -8,7 +8,7 @@ from timm.models.layers import trunc_normal_
 
 TRAIN_SIZE = 384
 
-class MHFNet(nn.Module):
+class FCIFNet(nn.Module):
     def __init__(self, pretrained=True):
         super().__init__()
         self.rgb_backbone = smt_t(pretrained)
