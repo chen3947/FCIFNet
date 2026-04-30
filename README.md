@@ -22,5 +22,5 @@ Our saliency maps can be downloaded from:
 [百度网盘](https://pan.baidu.com/s/1PRUSAC49zGfHsGye6FixQw) 提取码：u2ja
 
 ## Evaluate tools
-You can select one of toolboxes to get the metrics:
+We use the following toolbox to compute the metrics::
 [SOD_Evaluation_Metrics](https://github.com/zyjwuyan/SOD_Evaluation_Metrics)
